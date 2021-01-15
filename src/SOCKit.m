@@ -45,6 +45,8 @@ NSString* kTemporaryBackslashToken = @"/backslash/";
 
 @implementation SOCPattern
 
+static NSCharacterSet *cachedNonParameterCharacterSet = nil;
+
 - (id)initWithString:(NSString *)string {
   if ((self = [super init])) {
     _patternString = [string copy];
@@ -71,10 +73,17 @@ NSString* kTemporaryBackslashToken = @"/backslash/";
 #pragma mark - Pattern Compilation
 
 - (NSCharacterSet *)nonParameterCharacterSet {
-  NSMutableCharacterSet* parameterCharacterSet = [NSMutableCharacterSet alphanumericCharacterSet];
-  [parameterCharacterSet addCharactersInString:@".@_"];
-  NSCharacterSet* nonParameterCharacterSet = [parameterCharacterSet invertedSet];
-  return nonParameterCharacterSet;
+    if (cachedNonParameterCharacterSet) {
+        return cachedNonParameterCharacterSet;
+    }
+    
+    @synchronized (self) {
+        NSMutableCharacterSet* parameterCharacterSet = [NSMutableCharacterSet alphanumericCharacterSet];
+        [parameterCharacterSet addCharactersInString:@".@_"];
+        cachedNonParameterCharacterSet = [[parameterCharacterSet invertedSet] retain];
+    }
+    
+    return cachedNonParameterCharacterSet;
 }
 
 - (void)_compilePattern {
