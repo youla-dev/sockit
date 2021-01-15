@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.license          =  { :type => 'Apache 2.0' }
   s.requires_arc     = false
 
-  s.source_files     = '*.{h,m}'
+  s.source_files     = 'src/*.{h,m}'
 end
