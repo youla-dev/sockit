@@ -1,6 +1,10 @@
 SOCKit
 ======
 
+## Build XCFramework
+
+run ```sh build_xcframework.sh```
+
 String <-> Object Coding for Objective-C. Rhymes with "socket".
 
 With SOCKit and [SOCPattern][] you can easily transform objects into strings and vice versa.

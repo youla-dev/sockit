@@ -1,0 +1,6 @@
+framework module SOCKit {
+  umbrella header "SOCKit.h"
+
+  export *
+  module * { export * }
+}
